@@ -1,1 +1,0 @@
-dlgbox.o: dlgbox.s

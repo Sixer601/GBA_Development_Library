@@ -18,14 +18,13 @@ void SetTextBoxData(struct textbox * pTextBox, int textBoxTilesLen, const unsign
 	}
 }
 
-void CreateTextBox(struct textbox * pTextBox, int top, int bottom, int left, int right)
+void CreateTextBox(struct textbox * pTextBox, int top, int bottom, int left, int right, CSTR text)
 {
 	pTextBox->top = top;
 	pTextBox->bottom = bottom;
 	pTextBox->left = left;
 	pTextBox->right = right;
 	pTextBox->visible = true;
-	pTextBox->before = REG_DISPCNT;
 	TSurface src, *dst= tte_get_surface();
 	srf_init(&src, SRF_CHR4C, pTextBox->tBoxTiles, 240, 32, 4, (u16*)pTextBox->tBoxPal);
 	srf_pal_copy(dst, &src, 16);
@@ -41,6 +40,7 @@ void CreateTextBox(struct textbox * pTextBox, int top, int bottom, int left, int
 	REG_DISPCNT |= DCNT_WIN0;
 
 	tte_set_margins(left, top, right, bottom);
+	tte_write(text);
 }
 
 void TextBoxIsVisible(struct textbox * pTextBox, bool isVisible)
@@ -50,12 +50,12 @@ void TextBoxIsVisible(struct textbox * pTextBox, bool isVisible)
 		if(isVisible == false)
 		{
 			// no longer show textbox
-			REG_DISPCNT = pTextBox->before;
+			REG_DISPCNT &= ~DCNT_BG0;
 		}
 		else
 		{
 			// show textbox
-			REG_DISPCNT |= DCNT_WIN0;
+			REG_DISPCNT |= DCNT_BG0;
 		}
 		pTextBox->visible = isVisible;
 	}

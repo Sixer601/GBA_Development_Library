@@ -13,9 +13,17 @@
 // Background Constants
 // =====================
 
-#define BGTILESLENGTH 56
+#define BGTILESLENGTH 3232
 #define BGMAPLENGTH 1024
 #define BGPALLENGTH 256
+#define COMPUTERX 64
+#define COMPUTERY -32
+
+// =====================
+// Controller Constants
+// =====================
+
+#define ABUTTON 0
 
 // =====================
 // Text Constants

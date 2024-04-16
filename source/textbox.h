@@ -9,7 +9,6 @@ struct textbox
 	int bottom;
 	int left;
 	int right;
-	u32 before;
 	bool visible;
 	int tBoxTilesLen;
 	unsigned int tBoxTiles[TBOXTILESLENGTH];
@@ -19,6 +18,6 @@ struct textbox
 
 extern void SetTextBoxData(struct textbox * pTextBox, int textBoxTilesLen, const unsigned int textBoxTiles[], int textBoxPalLen, const unsigned short textBoxPal[]);
 
-extern void CreateTextBox(struct textbox * pTextBox, int top, int bottom, int left, int right);
+extern void CreateTextBox(struct textbox * pTextBox, int top, int bottom, int left, int right, CSTR text);
 
 extern void TextBoxIsVisible(struct textbox * pTextBox, bool isVisible);

@@ -28,6 +28,6 @@ void SetBackground(struct background *pBackground, int charblock, int screenbloc
 	memcpy(&tile_mem[charblock][0], pBackground->bgTiles, pBackground->bgTilesLen);
 	memcpy(&se_mem[screenblock][0], pBackground->bgMap, pBackground->bgMapLen);
 
-	REG_BG2CNT= BG_CBB(charblock) | BG_SBB(screenblock) | BG_4BPP | BG_REG_64x64;
+	REG_BG2CNT= BG_CBB(charblock) | BG_SBB(screenblock) | BG_8BPP | BG_REG_64x64;
 	REG_DISPCNT= DCNT_OBJ | DCNT_OBJ_1D | DCNT_MODE0 | DCNT_BG2 | DCNT_BG0;
 }

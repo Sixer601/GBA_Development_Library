@@ -3,6 +3,7 @@
 #include <tonc.h>
 #include "constants.h"
 #include "player.h"
+#include "character.h"
 #include "sprite.h"
 #include "background.h"
 #include "textbox.h"
@@ -11,6 +12,7 @@
 #include "border.h"
 #include "map.h"
 #include "playerSprite.h"
+#include "npcSprite.h"
 
 OBJ_ATTR obj_buffer[128];
 int MAP_WIDTH = 208;
@@ -39,19 +41,19 @@ int main()
 	SetPlayerSprite(&myPlayer, &obj_buffer[0], &playerSprite);
 	SetPlayerLocation(&myPlayer, &obj_buffer[0], 104, 64);
 
+	struct sprite npcSprite;
+	SetSpriteData(&npcSprite, npcSpriteTilesLen, npcSpriteTiles, npcSpritePalLen, npcSpritePal);
+
+	//struct character npc1;
+	//SetCharacterSprite(&npc1, &obj_buffer[16], &npcSprite);
+	//SetCharacterLocation(&npc1, &obj_buffer[16], 168, 96);
+
 	struct background map;
 	SetBackgroundData(&map, mapTilesLen, mapTiles, mapMapLen, mapMap, mapPalLen, mapPal);
 	SetBackground(&map, 2, 12);
 
 	struct textbox tBox;
 	SetTextBoxData(&tBox, dlgboxTilesLen, dlgboxTiles, dlgboxPalLen, dlgboxPal);
-	CreateTextBox(&tBox, 132, 232, 8, 156);
-	CSTR text=
-		"#{P} Hello World";
-	tte_write(text);
-
-	// Reset margins for coord-printing
-	tte_set_margins(8, 8, 232, 20);
 
 	int x = 0;
 	int y = 0;
@@ -65,12 +67,16 @@ int main()
 		xdir = key_tri_horz();
 		ydir = key_tri_vert();
 
-		tte_printf("#{es;P}%d, %d", x, y);
-
 		if(moveDelay <= 0)
 		{
-			x = x + 16 * xdir;
-			y = y + 16 * ydir;
+			if((x + 16 * xdir) >= -96 && (x + 16 * xdir) <= 112)
+			{
+				x = x + 16 * xdir;
+			}
+			if((y + 16 * ydir) >= -32 && (y + 16 * ydir) <= 144)
+			{
+				y = y + 16 * ydir;
+			}
 			moveDelay = MOVEDELAYMAX;
 		}
 		else
@@ -78,17 +84,18 @@ int main()
 			moveDelay--;
 		}
 
-		REG_BG2HOFS = x;
-		REG_BG2VOFS = y;
-
-		if((x / 16) % 2 == 0)
+		if(x == COMPUTERX && y == COMPUTERY)
 		{
-			TextBoxIsVisible(&tBox, false);
+			TextBoxIsVisible(&tBox, true);
+			CreateTextBox(&tBox, 132, 232, 8, 156, "#{P}This is a computer.");
 		}
 		else
 		{
-			TextBoxIsVisible(&tBox, true);
+			TextBoxIsVisible(&tBox, false);
 		}
+
+		REG_BG2HOFS = x;
+		REG_BG2VOFS = y;
 	}
 
 	return 0;

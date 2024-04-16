@@ -1,1 +1,0 @@
-playerSprite.o: playerSprite.s
