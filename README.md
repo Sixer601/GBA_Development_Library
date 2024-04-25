@@ -5,6 +5,7 @@
 To aid in the development for the Gameboy Advanced, by providing classes for sprites, backgrounds, the player, and a textbox.
 
 ====== Files Included ======
+
 background.c - Contains all methods for the background class.
 background.h - Contains method definitions and the struct definition for background.c
 character.c - Contains all methods for the character class.
